@@ -1,5 +1,6 @@
 const express = require('express') //載入express
 const exphbs = require('express-handlebars') //載入handlebars
+const restaurantList = require('./restaurant.json')
 
 const port = 3000
 const app = express()
@@ -15,7 +16,7 @@ app.use(express.static('public'))
 
 //設置路由
 app.get('/', (req, res) => {
-  res.render('index')
+  res.render('index', { restaurant: restaurantList.results })
 })
 
 app.listen(port, () => {
