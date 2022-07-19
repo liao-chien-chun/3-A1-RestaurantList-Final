@@ -14,9 +14,15 @@ app.set('view engine', 'handlebars')
 //setting static files
 app.use(express.static('public'))
 
-//設置路由
+//設置首頁路由
 app.get('/', (req, res) => {
   res.render('index', { restaurant: restaurantList.results })
+})
+
+//設置show頁面路由
+app.get('/restaurants/:id', (req, res) => {
+  const restaurant = restaurantList.results.find(restaurant => restaurant.id.toString() === req.params.id)
+  res.render('show', { restaurant: restaurant })
 })
 
 app.listen(port, () => {
