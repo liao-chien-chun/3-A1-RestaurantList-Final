@@ -34,7 +34,7 @@
    ```bash
    npm init -y
    ```
-5. 在終端機輸入
+5. 在終端機輸入以下指令，下載需要的套件
    ```bash
    npm i express nodemon express-handlebars@3.0.0
    ```
