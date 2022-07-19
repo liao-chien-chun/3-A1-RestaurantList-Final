@@ -28,11 +28,12 @@ app.get('/restaurants/:id', (req, res) => {
 //設置搜尋路由
 app.get('/search', (req, res) => {
   //先拿到queyr string
-  const keyword = req.query.keyword
+  const keyword = req.query.keyword.trim()
   const restaurants = restaurantList.results.filter(restaurant =>  {
     return restaurant.name.toLowerCase().includes(keyword.toLowerCase()) || restaurant.category.toLowerCase().includes(keyword.toLowerCase())
   })
-  res.render('index', { restaurant: restaurants, keyword })
+  
+  res.render('index', { restaurant: restaurants, keyword })  
 })
 
 
