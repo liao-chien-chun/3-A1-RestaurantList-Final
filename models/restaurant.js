@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')//載入mongoose
-const Schema = mongooseSchema //載入mongoose的Schema
+const Schema = mongoose.Schema //載入mongoose的Schema
 
 //建立一個Schema
 const restaurantSchema = new Schema({
@@ -37,7 +37,7 @@ const restaurantSchema = new Schema({
   },
   description: {
     type: String,
-    description
+    required: true,
   },
 })
 
