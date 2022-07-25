@@ -37,6 +37,11 @@ app.get('/', (req, res) => {
     .catch(error => console.log(error)) //錯誤處理
 })
 
+//設置新增餐廳頁面路由
+app.get('/restaurants/new', (req , res) => {
+  res.render('new')
+})
+
 //設置show頁面路由
 app.get('/restaurants/:id', (req, res) => {
   const restaurant = restaurantList.results.find(restaurant => restaurant.id.toString() === req.params.id)

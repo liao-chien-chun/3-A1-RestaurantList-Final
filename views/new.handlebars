@@ -1,0 +1,104 @@
+<h2 class="my-2 text-center">新增餐廳</h2>
+<div class="container py-5">
+  <div class="row">
+    <div class="col-12 col-lg-10 col-xl-8 mx-auto">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title text-center">新增餐廳資料</h5>
+          <hr>
+          <form method="POST" action="/restaurants">
+            <div class="row mb-3 g-2">
+              <label for="name" class="col-md-4 col-form-label">
+                店名
+              </label>
+              <div class="col-md-8">
+                <input type="text" name="name" id="name">
+              </div>
+            </div>
+  
+            <div class="row mb-2 g-2 align-items-center">
+              <label for="name_en" class="col-md-4 col-form-label">英文店名</label>
+              <div class="col-md-8">
+                <input type="text"  id="name_en" name="name_en">
+              </div>
+            </div>
+  
+            <div class="row mb-2 g-2 align-items-center">
+              <label for="category" class="col-md-4 col-form-label">餐廳分類</label>
+              <div class="col-md-8">
+                <input type="text" id="category" name="category" list="categoryOptions">
+                <datalist id="categoryOptions">
+                  <option>美式</option>
+                  <option>咖啡</option>
+                  <option>中東料理</option>
+                  <option>日本料理</option>
+                  <option>義式餐廳</option>
+                </datalist>
+              </div>
+            </div>
+  
+            <div class="row mb-2 g-2 align-items-center">
+              <label for="image" class="col-md-4 col-form-label">圖片連結</label>
+              <div class="col-md-8">
+                <input type="url" id="image" name="image">
+              </div>
+            </div>
+  
+            <div class="row mb-2 g-2 align-items-center">
+              <label for="location" class="col-md-4 col-form-label">地址</label>
+              <div class="col-md-8">
+                <input type="text" id="location" name="location" >
+              </div>
+            </div>
+  
+            <div class="row g-2 mb-3">
+              <label for="phone" class="col-md-4 col-form-label">
+                電話
+              </label>
+              <div class="col-md-8">
+                <input type="tel" name="phone" id="phone">
+              </div>
+            </div>
+
+            <div class="row g-2 mb-3">
+              <label for="google_map" class="col-md-4 col-form-label">
+                Google地圖
+              </label>
+              <div class="col-md-8">
+                <input type="url" name="google_map" id="google_map">
+              </div>
+            </div>
+
+            <div class="row g-2 mb-3">
+              <label for="rating" class="col-md-4 col-form-label">
+                評分
+              </label>
+              <div class="col-md-8">
+                <input type="number" name="rating" id="rating">
+              </div>
+            </div>
+
+            <div class="row g-2 mb-3">
+              <label for="description" class="col-md-4 col-form-label">
+                描述
+              </label>
+              <div class="col-md-8">
+                <input type="text" name="description" id="description">
+              </div>
+            </div>
+  
+            <div class="text-center">
+              <button class="btn btn-success" type="submit">新增</button>
+              <a href="/">
+                <button type="button" class="btn btn-outline btn-primary">
+                回到首頁
+                </button>
+              </a>
+            </div>
+          </form>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+</div>
