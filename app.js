@@ -3,7 +3,7 @@ const exphbs = require('express-handlebars') //載入handlebars
 const mongoose = require('mongoose') //載入mongoose
 const bodyParser = require('body-parser') //引入body-parser
 const Restaurant = require('./models/restaurant') //載入Restaurant model
-const restaurant = require('./models/restaurant')
+
 
 const port = 3000
 const app = express()
