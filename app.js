@@ -1,7 +1,7 @@
 const express = require('express') //載入express
 const exphbs = require('express-handlebars') //載入handlebars
-// const restaurantList = require('./restaurant.json')
 const mongoose = require('mongoose') //載入mongoose
+const bodyParser = require('body-parser') //引入body-parser
 const Restaurant = require('./models/restaurant') //載入Restaurant model
 
 const port = 3000
@@ -19,6 +19,8 @@ db.once('open', () => {
   console.log('mongodb connected')
 })
 
+//用 app.use 規定每一筆請求都需要透過 body-parser 進行前置處理
+app.use(bodyParser.urlencoded({ extended: true }))
 
 //設定樣版引擎
 //透過app.engine來定義要使用的樣板引擎
@@ -40,6 +42,12 @@ app.get('/', (req, res) => {
 //設置新增餐廳頁面路由
 app.get('/restaurants/new', (req , res) => {
   res.render('new')
+})
+//POST路由把資料送往資料庫
+app.post('/restaurants', (req, res) => {
+  Restaurant.create(req.body)
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
 })
 
 //設置show頁面路由
