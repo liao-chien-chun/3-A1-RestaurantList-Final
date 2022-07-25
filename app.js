@@ -1,9 +1,23 @@
 const express = require('express') //載入express
 const exphbs = require('express-handlebars') //載入handlebars
 const restaurantList = require('./restaurant.json')
+const mongoose = require('mongoose') //載入mongoose
 
 const port = 3000
 const app = express()
+
+//設定與mongoDB連線
+mongoose.connect(process.env.MONGODB_URI3, { useNewUrlParser: true, useUnifiedTopology: true })
+//取得資料庫連線狀態
+const db = mongoose.connection
+//連線異常
+db.on('error', () => {
+  console.log('mongodb error')
+})
+db.once('open', () => {
+  console.log('mongodb connected')
+})
+
 
 //設定樣版引擎
 //透過app.engine來定義要使用的樣板引擎
