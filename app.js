@@ -1,7 +1,8 @@
 const express = require('express') //載入express
 const exphbs = require('express-handlebars') //載入handlebars
-const restaurantList = require('./restaurant.json')
+// const restaurantList = require('./restaurant.json')
 const mongoose = require('mongoose') //載入mongoose
+const Restaurant = require('./models/restaurant') //載入Restaurant model
 
 const port = 3000
 const app = express()
@@ -30,7 +31,10 @@ app.use(express.static('public'))
 
 //設置首頁路由
 app.get('/', (req, res) => {
-  res.render('index', { restaurant: restaurantList.results })
+  Restaurant.find() //取出Restaurant model 裡的所有資料
+    .lean() //把Mongoose裡的物件轉換成乾淨的js資料陣列
+    .then(restaurants => res.render('index', { restaurants }))
+    .catch(error => console.log(error)) //錯誤處理
 })
 
 //設置show頁面路由
