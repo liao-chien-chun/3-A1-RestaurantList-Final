@@ -1,32 +1,32 @@
-<h2 class="my-2 text-center">新增餐廳</h2>
+<h2 class="my-2 text-center">修改餐廳資料</h2>
 <div class="container py-5">
   <div class="row">
     <div class="col-12 col-lg-10 col-xl-8 mx-auto">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title text-center">新增餐廳資料</h5>
+          <h5 class="card-title text-center">修改餐廳資料 - {{ restaurant.name }}</h5>
           <hr>
-          <form method="POST" action="/restaurants">
+          <form method="POST" action="/restaurants/{{ restaurant._id}}/edit">
             <div class="row mb-3 g-2">
               <label for="name" class="col-md-4 col-form-label">
                 店名
               </label>
               <div class="col-md-8">
-                <input type="text" name="name" id="name">
+                <input type="text" name="name" id="name" class="form-control" value="{{ restaurant.name }}">
               </div>
             </div>
-  
+
             <div class="row mb-2 g-2 align-items-center">
               <label for="name_en" class="col-md-4 col-form-label">英文店名</label>
               <div class="col-md-8">
-                <input type="text"  id="name_en" name="name_en">
+                <input type="text" id="name_en" name="name_en" class="form-control" value="{{ restaurant.name_en }}">
               </div>
             </div>
-  
+
             <div class="row mb-2 g-2 align-items-center">
               <label for="category" class="col-md-4 col-form-label">餐廳分類</label>
               <div class="col-md-8">
-                <input type="text" id="category" name="category" list="categoryOptions">
+                <input type="text" id="category" name="category" list="categoryOptions" class="form-control" value="{{ restaurant.category }}">
                 <datalist id="categoryOptions">
                   <option>美式</option>
                   <option>咖啡</option>
@@ -36,27 +36,27 @@
                 </datalist>
               </div>
             </div>
-  
+
             <div class="row mb-2 g-2 align-items-center">
               <label for="image" class="col-md-4 col-form-label">圖片連結</label>
               <div class="col-md-8">
-                <input type="url" id="image" name="image">
+                <input type="url" id="image" name="image" class="form-control" value="{{ restaurant.image }}">
               </div>
             </div>
-  
+
             <div class="row mb-2 g-2 align-items-center">
               <label for="location" class="col-md-4 col-form-label">地址</label>
               <div class="col-md-8">
-                <input type="text" id="location" name="location" >
+                <input type="text" id="location" name="location" class="form-control" value="{{ restaurant.location }}">
               </div>
             </div>
-  
+
             <div class="row g-2 mb-3">
               <label for="phone" class="col-md-4 col-form-label">
                 電話
               </label>
               <div class="col-md-8">
-                <input type="tel" name="phone" id="phone">
+                <input type="tel" name="phone" id="phone" class="form-control" value="{{ restaurant.phone }}">
               </div>
             </div>
 
@@ -65,7 +65,7 @@
                 Google地圖
               </label>
               <div class="col-md-8">
-                <input type="url" name="google_map" id="google_map">
+                <input type="url" name="google_map" id="google_map" class="form-control" value="{{ restaurant.google_map }}">
               </div>
             </div>
 
@@ -74,7 +74,7 @@
                 評分
               </label>
               <div class="col-md-8">
-                <input type="number" name="rating" id="rating">
+                <input type="number" name="rating" id="rating" class="form-control" value="{{ restaurant.rating }}">
               </div>
             </div>
 
@@ -83,21 +83,21 @@
                 描述
               </label>
               <div class="col-md-8">
-                <textarea name="description" id="description" cols="30" rows="10"></textarea>
+                <textarea name="description" id="description" cols="30" rows="10" >{{ restaurant.description }}</textarea>
               </div>
             </div>
-  
+
             <div class="text-center">
               <button class="btn btn-success" type="submit">新增</button>
               <a href="/">
                 <button type="button" class="btn btn-outline btn-primary">
-                回到首頁
+                  回到首頁
                 </button>
               </a>
             </div>
           </form>
         </div>
-  
+
       </div>
     </div>
   </div>
