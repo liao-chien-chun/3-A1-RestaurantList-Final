@@ -68,6 +68,14 @@ app.get('/restaurants/:id/edit', (req, res) => {
     .then(restaurant => res.render('edit', { restaurant }))
     .catch(error => console.log(error))
 })
+//edit 更新資料路由，把更新的資料送往資料庫
+app.post('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  Restaurant.findByIdAndUpdate(id, req.body)
+    .then(() => res.redirect(`/restaurants/${id}`))
+    .catch(error => console.log(error))
+})
+
 
 //設置搜尋路由
 app.get('/search', (req, res) => {
