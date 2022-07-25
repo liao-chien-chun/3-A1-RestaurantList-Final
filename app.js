@@ -88,12 +88,17 @@ app.post('/restaurants/:id/delete', (req, res) => {
 //設置搜尋路由
 app.get('/search', (req, res) => {
   //先拿到queyr string
-  const keyword = req.query.keyword.trim()
-  const restaurants = restaurantList.results.filter(restaurant =>  {
-    return restaurant.name.toLowerCase().includes(keyword.toLowerCase()) || restaurant.category.toLowerCase().includes(keyword.toLowerCase())
-  })
+  const keyword = req.query.keyword.trim().toLowerCase()
   
-  res.render('index', { restaurant: restaurants, keyword })  
+  Restaurant.find()
+    .lean()
+    .then(restaurants => {
+      const restaurantsData = restaurants.filter(data => 
+        data.name.toLowerCase().includes(keyword) || data.category.toLowerCase().includes(keyword)
+      )
+      res.render('index', { restaurants: restaurantsData, keyword })
+    })
+    .catch(error => console.log(error))
 })
 
 
