@@ -71,11 +71,19 @@ app.get('/restaurants/:id/edit', (req, res) => {
 //edit 更新資料路由，把更新的資料送往資料庫
 app.post('/restaurants/:id/edit', (req, res) => {
   const id = req.params.id
-  Restaurant.findByIdAndUpdate(id, req.body)
-    .then(() => res.redirect(`/restaurants/${id}`))
+  Restaurant.findByIdAndUpdate(id, req.body) //找到對應的資料後整個一起更新
+    .then(() => res.redirect(`/restaurants/${id}`)) //導回各別餐廳頁面
     .catch(error => console.log(error))
 })
 
+//delete路由
+app.post('/restaurants/:id/delete', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .then(restaurant => restaurant.remove())
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
 
 //設置搜尋路由
 app.get('/search', (req, res) => {
