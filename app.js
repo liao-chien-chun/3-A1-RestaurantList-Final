@@ -3,6 +3,7 @@ const exphbs = require('express-handlebars') //載入handlebars
 const mongoose = require('mongoose') //載入mongoose
 const bodyParser = require('body-parser') //引入body-parser
 const Restaurant = require('./models/restaurant') //載入Restaurant model
+const restaurant = require('./models/restaurant')
 
 const port = 3000
 const app = express()
@@ -50,10 +51,13 @@ app.post('/restaurants', (req, res) => {
     .catch(error => console.log(error))
 })
 
-//設置show頁面路由
+//設置show頁面路由 （detail）
 app.get('/restaurants/:id', (req, res) => {
-  const restaurant = restaurantList.results.find(restaurant => restaurant.id.toString() === req.params.id)
-  res.render('show', { restaurant: restaurant })
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .lean()
+    .then(restaurant => res.render('show', { restaurant }))
+    .catch(error => console.log(error))
 })
 
 //設置搜尋路由
