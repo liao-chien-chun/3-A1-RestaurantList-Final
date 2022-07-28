@@ -3,6 +3,7 @@ const exphbs = require('express-handlebars') //載入handlebars
 const mongoose = require('mongoose') //載入mongoose
 const bodyParser = require('body-parser') //引入body-parser
 const Restaurant = require('./models/restaurant') //載入Restaurant model
+const methodOverride = require('method-override') //載入method-override
 
 
 const port = 3000
@@ -22,6 +23,8 @@ db.once('open', () => {
 
 //用 app.use 規定每一筆請求都需要透過 body-parser 進行前置處理
 app.use(bodyParser.urlencoded({ extended: true }))
+// 設定每一筆請求都會透過 methodOverride 進行前置處理
+app.use(methodOverride('_method'))
 
 //設定樣版引擎
 //透過app.engine來定義要使用的樣板引擎
@@ -69,7 +72,7 @@ app.get('/restaurants/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 //edit 更新資料路由，把更新的資料送往資料庫
-app.post('/restaurants/:id/edit', (req, res) => {
+app.put('/restaurants/:id', (req, res) => {
   const id = req.params.id
   Restaurant.findByIdAndUpdate(id, req.body) //找到對應的資料後整個一起更新
     .then(() => res.redirect(`/restaurants/${id}`)) //導回各別餐廳頁面
@@ -77,7 +80,7 @@ app.post('/restaurants/:id/edit', (req, res) => {
 })
 
 //delete路由
-app.post('/restaurants/:id/delete', (req, res) => {
+app.delete('/restaurants/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .then(restaurant => restaurant.remove())
