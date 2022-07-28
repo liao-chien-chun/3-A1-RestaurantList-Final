@@ -5,6 +5,8 @@ const bodyParser = require('body-parser') //引入body-parser
 const Restaurant = require('./models/restaurant') //載入Restaurant model
 const methodOverride = require('method-override') //載入method-override
 
+const routes = require('./routes') //引用路由器
+//他會自己找到此資料夾下要用的檔案
 
 const port = 3000
 const app = express()
@@ -25,6 +27,7 @@ db.once('open', () => {
 app.use(bodyParser.urlencoded({ extended: true }))
 // 設定每一筆請求都會透過 methodOverride 進行前置處理
 app.use(methodOverride('_method'))
+app.use(routes) // 將requset導入路由器
 
 //設定樣版引擎
 //透過app.engine來定義要使用的樣板引擎
@@ -34,76 +37,6 @@ app.set('view engine', 'handlebars')
 
 //setting static files
 app.use(express.static('public'))
-
-//設置首頁路由
-app.get('/', (req, res) => {
-  Restaurant.find() //取出Restaurant model 裡的所有資料
-    .lean() //把Mongoose裡的物件轉換成乾淨的js資料陣列
-    .then(restaurants => res.render('index', { restaurants }))
-    .catch(error => console.log(error)) //錯誤處理
-})
-
-//設置新增餐廳頁面路由
-app.get('/restaurants/new', (req , res) => {
-  res.render('new')
-})
-//POST路由把資料送往資料庫
-app.post('/restaurants', (req, res) => {
-  Restaurant.create(req.body)
-    .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
-})
-
-//設置show頁面路由 （detail）
-app.get('/restaurants/:id', (req, res) => {
-  const id = req.params.id
-  return Restaurant.findById(id)
-    .lean()
-    .then(restaurant => res.render('show', { restaurant }))
-    .catch(error => console.log(error))
-})
-
-//設置Edit路由
-app.get('/restaurants/:id/edit', (req, res) => {
-  const id = req.params.id
-  return Restaurant.findById(id)
-    .lean()
-    .then(restaurant => res.render('edit', { restaurant }))
-    .catch(error => console.log(error))
-})
-//edit 更新資料路由，把更新的資料送往資料庫
-app.put('/restaurants/:id', (req, res) => {
-  const id = req.params.id
-  Restaurant.findByIdAndUpdate(id, req.body) //找到對應的資料後整個一起更新
-    .then(() => res.redirect(`/restaurants/${id}`)) //導回各別餐廳頁面
-    .catch(error => console.log(error))
-})
-
-//delete路由
-app.delete('/restaurants/:id', (req, res) => {
-  const id = req.params.id
-  return Restaurant.findById(id)
-    .then(restaurant => restaurant.remove())
-    .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
-})
-
-//設置搜尋路由
-app.get('/search', (req, res) => {
-  //先拿到queyr string
-  const keyword = req.query.keyword.trim().toLowerCase()
-  
-  Restaurant.find()
-    .lean()
-    .then(restaurants => {
-      const restaurantsData = restaurants.filter(data => 
-        data.name.toLowerCase().includes(keyword) || data.category.toLowerCase().includes(keyword)
-      )
-      res.render('index', { restaurants: restaurantsData, keyword })
-    })
-    .catch(error => console.log(error))
-})
-
 
 
 //監聽伺服器
