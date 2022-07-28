@@ -4,17 +4,25 @@
     <div class="search-bar-inner">
       <form action="/search">
         <h4 class="mb-2">尋找餐廳：</h4>
-        <div class="input-group">
-          <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..."
-            value="{{keyword}}" aria-describedby="search-button">
-          <div class="input-group-append">
-            <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
+        <div class="d-flex flex-column flex-sm-row">
+          <div class="input-group mr-2">
+            <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..." value="{{keyword}}"
+              aria-describedby="search-button">
+            <div class="input-group-append">
+              <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
+            </div>
+          </div>
+          <div class="input-group ml-2">
+            <select name="sort" class="form-control" id="sort">
+              <option>A > Z</option>
+              <option>Z > A</option>
+              <option>類別</option>
+              <option>地區</option>
+            </select>
           </div>
         </div>
+
       </form>
-      <div class="mt-2">
-        <a href="/restaurants/new"><button class="btn btn-primary">新增餐廳</button></a>
-      </div>
     </div>
   </div>
 </div>
