@@ -20,6 +20,7 @@
 * nodemon - v 2.0.19
 * mongoose - v6.4.6
 * MongoDB
+* method-override 3.0.0
 
 ## 如何使用(安裝與執行)
 1. 確認有安裝node.js 與npm跟MondoDB或者MongoDb雲端版 跟圖形化介面Robo3T
@@ -31,7 +32,7 @@
    ```
 5. 在終端機輸入以下指令，下載需要的套件
    ```bash
-   npm i express nodemon express-handlebars@3.0.0 mongoose
+   npm i express nodemon express-handlebars@3.0.0 mongoose method-override 3.0.0
    ```
 6. 連線自己的Mongodb資料庫
 7. 連先完成後 先跑腳本新增種子資料
