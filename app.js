@@ -8,8 +8,11 @@ require('./config/mongoose') //引用mongoose連線設定
 //Mongoose 連線設定只需要被執行，不需要接到任何回傳參數利用，所以不需要再設定變數
 const usePassport = require('./config/passport')
 const flash = require('connect-flash')
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
-const port = 3000
+const port = process.env.PORT
 const app = express()
 
 //設定樣版引擎
@@ -21,7 +24,7 @@ app.set('view engine', 'hbs')
 
 // 使用 session 設定
 app.use(session({
-  secret: 'ThisIsEricSecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))

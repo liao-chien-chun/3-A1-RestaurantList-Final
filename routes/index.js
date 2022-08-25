@@ -9,12 +9,14 @@ const home = require('./modules/home')
 const restaurants = require('./modules/restaurants')
 // 引用 users 程式碼模組
 const users = require('./modules/users')
+const auth = require('./modules/auth')
 // 掛載 middleware
 const { authenticator } = require('../middleware/auth')
 
 router.use('/users', users)
 //將網址結構符合 /restaurants 字串的 request 導向 restaurants 模組
 router.use('/restaurants', authenticator, restaurants)
+router.use('/auth', auth)
 //將網址結構符合 ／ 字串的 request 導向home 模組
 router.use('/', authenticator, home)
 
