@@ -7,6 +7,7 @@ const routes = require('./routes') //引用路由器 //他會自己找到此資�
 require('./config/mongoose') //引用mongoose連線設定
 //Mongoose 連線設定只需要被執行，不需要接到任何回傳參數利用，所以不需要再設定變數
 const usePassport = require('./config/passport')
+const flash = require('connect-flash')
 
 const port = 3000
 const app = express()
@@ -31,10 +32,13 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // 設定每一筆請求都會透過 methodOverride 進行前置處理
 app.use(methodOverride('_method'))
 usePassport(app)
+app.use(flash())
 // 設定本地變數 res.locals
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.isAuthenticated() // 把req.isAuthenticated()回傳的布林值，交給res 使用
   res.locals.user = req.user // 把使用者資料交給 res
+  res.locals.success_msg = req.flash('success_msg') // 設定 成功訊息
+  res.locals.warning_msg = req.flash('warning_msg')
   next()
 })
 app.use(routes)  // 將requset導入路由器

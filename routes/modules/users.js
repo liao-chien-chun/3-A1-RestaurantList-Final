@@ -20,33 +20,53 @@ router.get('/register', (req, res) => {
 // 表單註冊路由
 router.post('/register', (req, res) => {
   const { name, email, password, confirmPassword } = req.body
+  const errors = []
+  // 沒有填寫所有資料
+  if (!name || !email || !password || !confirmPassword) {
+    errors.push({ message: '所有資料都是必填的！'})
+  }
+  // 密碼不一致
+  if (password !== confirmPassword) {
+    errors.push({ message: '密碼不相符！' })
+  }
+  if (errors.length) {
+    return res.render('register', {
+      errors,
+      name,
+      email,
+      password,
+      confirmPassword
+    })
+  }
+
   // 檢查是否已註冊
   User.findOne({ email })
     .then(user => {
       if (user) {
-        console.log('此使用者已經存在')
-        res.render('register', {
+        errors.push({ message: "此Email 已經註冊過了" })
+        return res.render('register', {
+          errors,
           name,
           email,
           password,
           confirmPassword,
         })
-      } else {
-        // 還沒註冊寫入資料庫
-        return User.create({
-          name,
-          email,
-          password,
-        })
-          .then(() => res.redirect('/users/login'))
-          .catch(err => console.log(err))
       }
+      // 還沒註冊寫入資料庫
+      return User.create({
+        name,
+        email,
+        password,
+      })
+        .then(() => res.redirect('/users/login'))
+        .catch(err => console.log(err))
     })
     .catch(err => console.log(err))
 })
 
 router.get('/logout', (req, res) => {
   req.logout()
+  req.flash('success_msg', '您已成功登出')
   res.redirect('/users/login')
 })
 
