@@ -39,6 +39,12 @@ const restaurantSchema = new Schema({
     type: String,
     required: true,
   },
+  userId: { // 這組設定代表去參照User的 Object。這是mongoose提供的Populate功能，可以建立不同collections 之間的關聯
+    type: Schema.Types.ObjectId,  //type:定義userId是一個Object，也就是他會連向另一個資料物件
+    ref: 'User',  // ref: 定義參考對象是 User model
+    index: true, //使用索引查詢資料能增加讀取效能
+    required: true
+  }
 })
 
 //匯出

@@ -7,7 +7,8 @@ const Restaurant = require('../../models/restaurant')
 
 //定義首頁路由
 router.get('/', (req, res) => {
-  Restaurant.find() //取出Restaurant model 裡的所有資料
+  const userId = req.user._id 
+  Restaurant.find({ userId }) 
     .lean() //把Mongoose裡的物件轉換成乾淨的js資料陣列
     .then(restaurants => res.render('index', { restaurants }))
     .catch(error => console.log(error)) //錯誤處理
