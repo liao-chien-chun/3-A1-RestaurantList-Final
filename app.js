@@ -6,6 +6,7 @@ const methodOverride = require('method-override') //載入method-override
 const routes = require('./routes') //引用路由器 //他會自己找到此資料夾下要用的檔案
 require('./config/mongoose') //引用mongoose連線設定
 //Mongoose 連線設定只需要被執行，不需要接到任何回傳參數利用，所以不需要再設定變數
+const usePassport = require('./config/passport')
 
 const port = 3000
 const app = express()
@@ -29,8 +30,8 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
 // 設定每一筆請求都會透過 methodOverride 進行前置處理
 app.use(methodOverride('_method'))
-// 將requset導入路由器
-app.use(routes) 
+usePassport(app)
+app.use(routes)  // 將requset導入路由器
 
 
 
