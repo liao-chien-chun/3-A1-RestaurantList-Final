@@ -21,9 +21,9 @@ app.use(express.static('public'))
 
 //設定樣版引擎
 //透過app.engine來定義要使用的樣板引擎
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 //透過app.set告訴express說要設定view engine 是handlebars
-app.set('view engine', 'handlebars')
+app.set('view engine', 'hbs')
 
 
 //監聽伺服器
