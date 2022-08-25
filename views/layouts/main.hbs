@@ -20,10 +20,16 @@
         <a class="navbar-brand" href="/">
           <img src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/6227/restaurant-list-logo.png" width="30"
             height="30" class="d-inline-block align-top" alt="我的餐廳清單">
-          我的餐廳清單
+          {{#if isAuthenticated}} {{ user.name}}{{/if}}
+          的餐廳清單
         </a>
         <div class="text-right">
-          <a href="/restaurants/new"><button class="btn btn-primary">新增餐廳</button></a>
+          {{#if isAuthenticated}}
+            <a href="/restaurants/new"><button class="btn btn-primary mx-3">新增餐廳</button></a>
+            <a href="/users/logout" class="btn btn-primary">Logout</a>
+          {{else}}
+            <a href="/users/login" class="btn btn-primary">Login</a>
+          {{/if}}
         </div>
       </div>
     </nav>
