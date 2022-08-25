@@ -39,6 +39,7 @@ app.use((req, res, next) => {
   res.locals.user = req.user // 把使用者資料交給 res
   res.locals.success_msg = req.flash('success_msg') // 設定 成功訊息
   res.locals.warning_msg = req.flash('warning_msg')
+  res.locals.error = req.flash('error')
   next()
 })
 app.use(routes)  // 將requset導入路由器
