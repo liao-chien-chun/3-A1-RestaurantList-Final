@@ -1,5 +1,6 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
+const bcrypt = require('bcryptjs')
 const User = require('../models/user')
 
 // 直接匯出function 到時候直接在app.js使用
@@ -15,10 +16,13 @@ module.exports = (app) => {
         if (!user) { // 找不到使用者
           return done(null, false, { message: 'That email is not registered!'})
         }
-        if (user.password !== password) { // 密碼不符合
-          return done(null, false, { message: '郵件或密碼不正確。'})
-        }
-        return done(null, user)
+        return bcrypt.compare(password, user.password)
+          .then(isMatch => {
+            if (!isMatch) {
+              return done(null, false, { message: '郵件或密碼不正確。' })
+            }
+            return done(null, user)
+          })
       })
       .catch(err => done(err, false))
   }))
