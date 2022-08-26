@@ -18,7 +18,7 @@ const SEED_USER = [
   }
 ]
 
-db.once('open', async () => {
+db.once('open', () => {
   // 先把需要的餐廳資料拿出來
   const seedRestaurant1 = restaurantList.filter(restaurant => restaurant.id < 4)
   const seedRestaurant2 = restaurantList.filter(restaurant => restaurant.id > 3 && restaurant.id < 7)
