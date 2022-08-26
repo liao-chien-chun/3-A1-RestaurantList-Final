@@ -19,32 +19,37 @@ const SEED_USER = [
 ]
 
 db.once('open', async () => {
-  SEED_USER.map(user => {
-    bcrypt
-      .genSalt(10)
-      .then(salt => bcrypt.hash(user.password, salt))
-      .then(hash => User.create({
-        name: user.name,
-        email: user.email,
-        password: hash
-      }))
-      .then(user => {
-        const userId = user._id
-        if (user.name === 'user1') {
-          restaurantList.forEach(restaurant => {
-            if (restaurant.id < 4) {
-              return Restaurant.create({ ...restaurant, userId })
-            }
-          })
-        }
-        if (user.name === 'user2') {
-          restaurantList.forEach(restaurant => {
-            if (restaurant.id > 3 && restaurant.id < 7) {
-              return Restaurant.create({ ...restaurant, userId })
-            }
-          })
-        }
-      })
+  // 先把需要的餐廳資料拿出來
+  const seedRestaurant1 = restaurantList.filter(restaurant => restaurant.id < 4)
+  const seedRestaurant2 = restaurantList.filter(restaurant => restaurant.id > 3 && restaurant.id < 7)
+  Promise.all(
+    Array.from(SEED_USER, (seedUser) => {
+      return bcrypt
+        .genSalt(10)
+        .then(salt => bcrypt.hash(seedUser.password, salt))
+        .then(hash => User.create({
+          name: seedUser.name,
+          email: seedUser.email,
+          password: hash
+        }))
+        .then(user => {
+          const userId = user._id
+          if (user.name === 'user1') {
+            seedRestaurant1.forEach(restaurant => {
+              restaurant.userId = userId
+            })
+            return Restaurant.create(seedRestaurant1)
+          } else {
+            seedRestaurant2.forEach(restaurant => {
+              restaurant.userId = userId
+            })
+            return Restaurant.create(seedRestaurant2)
+          }
+        })
+    })
+  )
+  .then(() => {
+    console.log('done')
+    process.exit()
   })
-  console.log('種子資料建立完畢')
 })
