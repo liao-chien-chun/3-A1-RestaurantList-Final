@@ -5,7 +5,6 @@ const Schema = mongoose.Schema //載入mongoose的Schema
 const restaurantSchema = new Schema({
   name: {
     type: String,
-    required: true,
   },
   name_en: {
     type: String,
