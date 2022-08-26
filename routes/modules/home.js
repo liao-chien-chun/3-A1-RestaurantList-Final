@@ -19,9 +19,10 @@ router.get('/search', (req, res) => {
   // 取得query String
   //去掉空白，統一改成小寫
   const keyword = req.query.keyword.trim().toLowerCase()
-
+  
+  const userId = req.user._id
   //取得所有餐廳資料
-   return Restaurant.find()
+  return Restaurant.find({ userId })
     .lean()
     .then(restaurants => {
       const restaurantsData = restaurants.filter
